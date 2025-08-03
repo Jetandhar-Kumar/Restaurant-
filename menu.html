@@ -1,0 +1,1787 @@
+# Guru Palace - Menu Page
+
+Here's a complete, responsive menu page that matches the theme of your restaurant website with unique features:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guru Palace | Menu - Premium Indian Cuisine in North Brunswick, NJ</title>
+
+    <!-- Premium Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Menu Page Specific CSS -->
+    <style>
+        /* Menu Page Specific Styles */
+        .menu-hero {
+            background: linear-gradient(rgba(13, 13, 13, 0.7), rgba(13, 13, 13, 0.7)), url('images/menu-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .menu-hero-content {
+            width: 100%;
+            color: white;
+            z-index: 2;
+        }
+
+        .menu-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s both;
+        }
+
+        .menu-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeInUp 1s both 0.3s;
+        }
+
+        .menu-category-nav {
+            background-color: var(--secondary-color);
+            padding: 20px 0;
+            position: sticky;
+            top: 80px;
+            z-index: 990;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-category-nav .nav-link {
+            color: var(--text-dark);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .menu-category-nav .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: calc(100% - 40px);
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .menu-category-nav .nav-link:hover,
+        .menu-category-nav .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .menu-category-nav .nav-link.active:after,
+        .menu-category-nav .nav-link:hover:after {
+            transform: scaleX(1);
+        }
+
+        .menu-section {
+            padding: 80px 0;
+        }
+
+        .category-title {
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .category-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .menu-item-card {
+            background-color: var(--dark-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            margin-bottom: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .menu-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .menu-item-card:hover .menu-item-img img {
+            transform: scale(1.1);
+        }
+
+        .menu-item-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .menu-item-title h4 {
+            margin-bottom: 0;
+            font-size: 1.2rem;
+        }
+
+        .menu-item-price {
+            color: var(--primary-color);
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+
+        .menu-item-desc {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spice-level {
+            display: flex;
+            align-items: center;
+        }
+
+        .spice-level i {
+            color: #ccc;
+            margin-right: 3px;
+            font-size: 0.8rem;
+        }
+
+        .spice-level i.active {
+            color: #ff6b6b;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .dietary-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .dietary-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(193, 155, 118, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .dietary-icon .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            border: 1px solid var(--primary-color);
+        }
+
+        .dietary-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .menu-category-highlight {
+            background-color: rgba(193, 155, 118, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .menu-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 15px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--gray-color);
+            color: var(--text-color);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+        }
+
+        .menu-search {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .menu-search input {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--gray-color);
+            border-radius: 30px;
+            color: var(--text-color);
+            padding-left: 45px;
+        }
+
+        .menu-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px 0;
+            display: none;
+        }
+
+        .chef-recommendation {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .menu-category-image {
+            height: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .menu-category-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 991.98px) {
+            .menu-category-nav {
+                top: 70px;
+            }
+
+            .menu-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .menu-hero {
+                height: 300px;
+            }
+
+            .menu-category-nav {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 15px 0;
+                top: 60px;
+            }
+
+            .menu-category-nav .nav {
+                display: inline-flex;
+                padding: 0 15px;
+            }
+
+            .menu-category-nav .nav-link {
+                padding: 8px 15px;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-logo">
+            <img src="images/logo.png" alt="Guru Palace" class="pulse">
+            <div class="preloader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Guru Palace" class="logo-light">
+                <img src="images/logo.png" alt="Guru Palace" class="logo-dark">
+            </a>
+
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html">Home</a></li>
+                <li class="nav-item active"><a href="menu.html">Menu</a></li>
+                <li class="nav-item"><a href="banquets.html">Banquets</a></li>
+                <li class="nav-item"><a href="catering.html">Catering</a></li>
+                <li class="nav-item"><a href="gallery.html">Gallery</a></li>
+                <li class="nav-item"><a href="about.html">About</a></li>
+                <li class="nav-item"><a href="contact.html">Contact</a></li>
+                <li class="nav-item highlight">
+                    <a href="https://gurupalace.orderllc.com/" class="btn-order">
+                        <span>Order Now</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Menu Hero Section -->
+    <section class="menu-hero">
+        <div class="container">
+            <div class="menu-hero-content">
+                <h1 data-aos="fade-down">Our Exquisite Menu</h1>
+                <p data-aos="fade-up">Explore the rich flavors of India with our carefully crafted dishes, prepared with
+                    authentic spices and traditional cooking techniques passed down through generations.</p>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <a href="https://gurupalace.orderllc.com/" class="btn btn-primary">Order Online</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Category Navigation -->
+    <div class="menu-category-nav">
+        <div class="container">
+            <ul class="nav justify-content-center" id="menuCategories">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#appetizers">Appetizers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#soups">Soups & Salads</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tandoor">Tandoor Specialties</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#curries">Curries</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#biryanis">Biryanis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#breads">Breads</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#desserts">Desserts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#beverages">Beverages</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Menu Filter -->
+    <section class="menu-section">
+        <div class="container">
+            <div class="menu-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="menuSearch" placeholder="Search for dishes...">
+            </div>
+
+            <div class="menu-filter">
+                <button class="filter-btn active" data-filter="all">All Items</button>
+                <button class="filter-btn" data-filter="vegetarian">Vegetarian</button>
+                <button class="filter-btn" data-filter="vegan">Vegan</button>
+                <button class="filter-btn" data-filter="gluten-free">Gluten Free</button>
+                <button class="filter-btn" data-filter="chef-recommended">Chef's Picks</button>
+                <button class="filter-btn" data-filter="spicy">Spicy</button>
+            </div>
+
+            <div class="no-results">
+                <h4>No items found</h4>
+                <p>Try adjusting your search or filter</p>
+            </div>
+
+            <!-- Appetizers Section -->
+            <section id="appetizers" class="menu-category">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="category-title">Appetizers</h2>
+                        <div class="menu-category-highlight">
+                            <p>Start your culinary journey with our selection of flavorful appetizers, perfect for
+                                sharing or enjoying as a light starter.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Appetizer Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/samosa.jpg" alt="Vegetable Samosa">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Vegetable Samosa</h4>
+                                    <span class="menu-item-price">$5.99</span>
+                                </div>
+                                <p class="menu-item-desc">Crispy pastry filled with spiced potatoes and peas, served
+                                    with mint and tamarind chutney.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appetizer Item 2 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian gluten-free">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/pakora.jpg" alt="Vegetable Pakora">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Vegetable Pakora</h4>
+                                    <span class="menu-item-price">$6.99</span>
+                                </div>
+                                <p class="menu-item-desc">Seasonal vegetables dipped in chickpea batter and deep-fried
+                                    to golden perfection.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Gluten Free">
+                                        <i class="fas fa-wheat"></i>
+                                        <span class="tooltip">Gluten Free</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appetizer Item 3 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/chicken-tikka.jpg" alt="Chicken Tikka">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Chicken Tikka</h4>
+                                    <span class="menu-item-price">$9.99</span>
+                                </div>
+                                <p class="menu-item-desc">Succulent pieces of chicken marinated in yogurt and spices,
+                                    cooked in the tandoor.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appetizer Item 4 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian vegan gluten-free">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/dahi-puri.jpg" alt="Dahi Puri">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Dahi Puri</h4>
+                                    <span class="menu-item-price">$7.99</span>
+                                </div>
+                                <p class="menu-item-desc">Crispy hollow puris filled with potatoes, chickpeas, yogurt,
+                                    and tangy tamarind chutney.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Vegan">
+                                        <i class="fas fa-seedling"></i>
+                                        <span class="tooltip">Vegan</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Gluten Free">
+                                        <i class="fas fa-wheat"></i>
+                                        <span class="tooltip">Gluten Free</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appetizer Item 5 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/lamb-kebab.jpg" alt="Seekh Kebab">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Seekh Kebab</h4>
+                                    <span class="menu-item-price">$10.99</span>
+                                </div>
+                                <p class="menu-item-desc">Minced lamb mixed with herbs and spices, skewered and grilled
+                                    in the tandoor.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appetizer Item 6 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/paneer-tikka.jpg" alt="Paneer Tikka">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Paneer Tikka</h4>
+                                    <span class="menu-item-price">$8.99</span>
+                                </div>
+                                <p class="menu-item-desc">Cubes of Indian cottage cheese marinated in spices and grilled
+                                    in the tandoor.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Soups & Salads Section -->
+            <section id="soups" class="menu-category">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="category-title">Soups & Salads</h2>
+                        <div class="menu-category-highlight">
+                            <p>Light and refreshing options to cleanse your palate or enjoy as a starter to your meal.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Soup Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian gluten-free">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/tomato-soup.jpg" alt="Tomato Shorba">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Tomato Shorba</h4>
+                                    <span class="menu-item-price">$5.99</span>
+                                </div>
+                                <p class="menu-item-desc">Aromatic tomato soup infused with Indian spices and fresh
+                                    herbs.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Gluten Free">
+                                        <i class="fas fa-wheat"></i>
+                                        <span class="tooltip">Gluten Free</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soup Item 2 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/mulligatawny.jpg" alt="Mulligatawny Soup">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Mulligatawny Soup</h4>
+                                    <span class="menu-item-price">$6.99</span>
+                                </div>
+                                <p class="menu-item-desc">Hearty lentil soup with vegetables, coconut milk, and aromatic
+                                    spices.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Salad Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian vegan gluten-free chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/kachumber.jpg" alt="Kachumber Salad">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Kachumber Salad</h4>
+                                    <span class="menu-item-price">$7.99</span>
+                                </div>
+                                <p class="menu-item-desc">Fresh cucumber, tomatoes, onions, and cilantro with a light
+                                    lemon dressing.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Vegan">
+                                        <i class="fas fa-seedling"></i>
+                                        <span class="tooltip">Vegan</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Gluten Free">
+                                        <i class="fas fa-wheat"></i>
+                                        <span class="tooltip">Gluten Free</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tandoor Specialties Section -->
+            <section id="tandoor" class="menu-category">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="category-title">Tandoor Specialties</h2>
+                        <div class="menu-category-image">
+                            <img src="images/tandoor.jpg" alt="Tandoor Oven">
+                        </div>
+                        <div class="menu-category-highlight">
+                            <p>Our signature dishes cooked in the traditional clay tandoor oven, imparting a distinctive
+                                smoky flavor.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Tandoor Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/tandoori-chicken.jpg" alt="Tandoori Chicken">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Tandoori Chicken</h4>
+                                    <span class="menu-item-price">$14.99</span>
+                                </div>
+                                <p class="menu-item-desc">Chicken marinated in yogurt and spices, cooked to perfection
+                                    in the tandoor.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tandoor Item 2 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/paneer-tikka-masala.jpg" alt="Paneer Tikka Masala">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Paneer Tikka Masala</h4>
+                                    <span class="menu-item-price">$13.99</span>
+                                </div>
+                                <p class="menu-item-desc">Tandoori paneer cubes in a rich and creamy tomato-based gravy.
+                                </p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tandoor Item 3 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/chicken-tikka-masala.jpg" alt="Chicken Tikka Masala">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Chicken Tikka Masala</h4>
+                                    <span class="menu-item-price">$15.99</span>
+                                </div>
+                                <p class="menu-item-desc">Tandoori chicken pieces in a creamy, spiced tomato sauce.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tandoor Item 4 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/lamb-tikka.jpg" alt="Lamb Tikka">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Lamb Tikka</h4>
+                                    <span class="menu-item-price">$16.99</span>
+                                    ```html
+                                </div>
+                                <p class="menu-item-desc">Tender pieces of lamb marinated in spices and yogurt, cooked
+                                    in the tandoor.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tandoor Item 5 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/malai-kofta.jpg" alt="Malai Kofta">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Malai Kofta</h4>
+                                    <span class="menu-item-price">$12.99</span>
+                                </div>
+                                <p class="menu-item-desc">Vegetable and paneer dumplings in a rich, creamy sauce.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tandoor Item 6 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/tandoori-shrimp.jpg" alt="Tandoori Shrimp">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Tandoori Shrimp</h4>
+                                    <span class="menu-item-price">$17.99</span>
+                                </div>
+                                <p class="menu-item-desc">Jumbo shrimp marinated in spices and grilled in the tandoor.
+                                </p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Curries Section -->
+            <section id="curries" class="menu-category">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="category-title">Curries</h2>
+                        <div class="menu-category-highlight">
+                            <p>Our rich and flavorful curries are made with authentic spices and cooking techniques that
+                                bring out the best in each ingredient.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Curry Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/palak-paneer.jpg" alt="Palak Paneer">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Palak Paneer</h4>
+                                    <span class="menu-item-price">$12.99</span>
+                                </div>
+                                <p class="menu-item-desc">Fresh spinach cooked with cubes of paneer in a mildly spiced
+                                    gravy.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Curry Item 2 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/butter-chicken.jpg" alt="Butter Chicken">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Butter Chicken</h4>
+                                    <span class="menu-item-price">$15.99</span>
+                                </div>
+                                <p class="menu-item-desc">Tender chicken in a rich, creamy tomato sauce with butter and
+                                    aromatic spices.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Curry Item 3 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian vegan gluten-free">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/chana-masala.jpg" alt="Chana Masala">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Chana Masala</h4>
+                                    <span class="menu-item-price">$11.99</span>
+                                </div>
+                                <p class="menu-item-desc">Chickpeas cooked in a flavorful onion-tomato gravy with
+                                    aromatic spices.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Vegan">
+                                        <i class="fas fa-seedling"></i>
+                                        <span class="tooltip">Vegan</span>
+                                    </div>
+                                    <div class="dietary-icon" data-tooltip="Gluten Free">
+                                        <i class="fas fa-wheat"></i>
+                                        <span class="tooltip">Gluten Free</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Curry Item 4 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/lamb-curry.jpg" alt="Lamb Curry">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Lamb Curry</h4>
+                                    <span class="menu-item-price">$16.99</span>
+                                </div>
+                                <p class="menu-item-desc">Tender pieces of lamb cooked in a rich, spiced onion-tomato
+                                    gravy.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Curry Item 5 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/baingan-bharta.jpg" alt="Baingan Bharta">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Baingan Bharta</h4>
+                                    <span class="menu-item-price">$11.99</span>
+                                </div>
+                                <p class="menu-item-desc">Smoked eggplant mashed and cooked with onions, tomatoes and
+                                    spices.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Curry Item 6 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/goat-curry.jpg" alt="Goat Curry">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Goat Curry</h4>
+                                    <span class="menu-item-price">$17.99</span>
+                                </div>
+                                <p class="menu-item-desc">Tender goat meat cooked in a rich, flavorful gravy with
+                                    traditional spices.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Biryanis Section -->
+            <section id="biryanis" class="menu-category">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="category-title">Biryanis</h2>
+                        <div class="menu-category-image">
+                            <img src="images/biryani.jpg" alt="Biryani">
+                        </div>
+                        <div class="menu-category-highlight">
+                            <p>Fragrant basmati rice layered with marinated meats or vegetables and cooked with aromatic
+                                spices in the traditional dum style.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Biryani Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/chicken-biryani.jpg" alt="Chicken Biryani">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Chicken Biryani</h4>
+                                    <span class="menu-item-price">$16.99</span>
+                                </div>
+                                <p class="menu-item-desc">Fragrant basmati rice layered with spiced chicken and cooked
+                                    in the dum style.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biryani Item 2 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/vegetable-biryani.jpg" alt="Vegetable Biryani">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Vegetable Biryani</h4>
+                                    <span class="menu-item-price">$13.99</span>
+                                </div>
+                                <p class="menu-item-desc">Fragrant basmati rice cooked with mixed vegetables and
+                                    aromatic spices.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biryani Item 3 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/lamb-biryani.jpg" alt="Lamb Biryani">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Lamb Biryani</h4>
+                                    <span class="menu-item-price">$18.99</span>
+                                </div>
+                                <p class="menu-item-desc">Tender pieces of lamb layered with fragrant basmati rice and
+                                    cooked with spices.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biryani Item 4 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/hyderabadi-biryani.jpg" alt="Hyderabadi Biryani">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Hyderabadi Biryani</h4>
+                                    <span class="menu-item-price">$17.99</span>
+                                </div>
+                                <p class="menu-item-desc">Traditional dum-style biryani with chicken, fragrant spices,
+                                    and saffron.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biryani Item 5 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/paneer-biryani.jpg" alt="Paneer Biryani">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Paneer Biryani</h4>
+                                    <span class="menu-item-price">$14.99</span>
+                                </div>
+                                <p class="menu-item-desc">Fragrant basmati rice layered with spiced paneer cubes and
+                                    cooked in dum style.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biryani Item 6 -->
+                    <div class="col-md-6 col-lg-4" data-category="spicy">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/shrimp-biryani.jpg" alt="Shrimp Biryani">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Shrimp Biryani</h4>
+                                    <span class="menu-item-price">$19.99</span>
+                                </div>
+                                <p class="menu-item-desc">Jumbo shrimp cooked with fragrant basmati rice and aromatic
+                                    spices.</p>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Breads Section -->
+            <section id="breads" class="menu-category">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="category-title">Breads</h2>
+                        <div class="menu-category-highlight">
+                            <p>Freshly baked breads made in-house daily, perfect for scooping up curries or enjoying on
+                                their own.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Bread Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/naan.jpg" alt="Naan">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Naan</h4>
+                                    <span class="menu-item-price">$3.99</span>
+                                </div>
+                                <p class="menu-item-desc">Traditional leavened bread baked in the tandoor.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bread Item 2 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/garlic-naan.jpg" alt="Garlic Naan">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Garlic Naan</h4>
+                                    <span class="menu-item-price">$4.99</span>
+                                </div>
+                                <p class="menu-item-desc">Naan bread topped with fresh garlic and cilantro.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bread Item 3 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/roti.jpg" alt="Roti">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Roti</h4>
+                                    <span class="menu-item-price">$2.99</span>
+                                </div>
+                                <p class="menu-item-desc">Whole wheat unleavened flatbread.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bread Item 4 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/paratha.jpg" alt="Paratha">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Paratha</h4>
+                                    <span class="menu-item-price">$4.99</span>
+                                </div>
+                                <p class="menu-item-desc">Flaky, layered whole wheat flatbread.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bread Item 5 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/puri.jpg" alt="Puri">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Puri</h4>
+                                    <span class="menu-item-price">$3.99</span>
+                                </div>
+                                <p class="menu-item-desc">Deep-fried puffed bread made with whole wheat flour.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bread Item 6 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/kulcha.jpg" alt="Stuffed Kulcha">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Stuffed Kulcha</h4>
+                                    <span class="menu-item-price">$5.99</span>
+                                </div>
+                                <p class="menu-item-desc">Leavened bread stuffed with spiced potatoes or paneer.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Desserts Section -->
+            <section id="desserts" class="menu-category">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="category-title">Desserts</h2>
+                        <div class="menu-category-highlight">
+                            <p>Sweet endings to your meal with our traditional Indian desserts made with love and
+                                authentic recipes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Dessert Item 1 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/gulab-jamun.jpg" alt="Gulab Jamun">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Gulab Jamun</h4>
+                                    <span class="menu-item-price">$5.99</span>
+                                </div>
+                                <p class="menu-item-desc">Soft milk dumplings soaked in rose-flavored sugar syrup.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dessert Item 2 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/rasmalai.jpg" alt="Rasmalai">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Rasmalai</h4>
+                                    <span class="menu-item-price">$6.99</span>
+                                </div>
+                                <p class="menu-item-desc">Soft cottage cheese patties soaked in sweetened, thickened
+                                    milk flavored with cardamom.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dessert Item 3 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/kheer.jpg" alt="Kheer">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Kheer</h4>
+                                    <span class="menu-item-price">$5.99</span>
+                                </div>
+                                <p class="menu-item-desc">Traditional rice pudding made with milk, sugar, and flavored
+                                    with cardamom and nuts.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dessert Item 4 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/gajar-halwa.jpg" alt="Gajar Halwa">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Gajar Halwa</h4>
+                                    <span class="menu-item-price">$6.99</span>
+                                </div>
+                                <p class="menu-item-desc">Carrot pudding made with grated carrots, milk, sugar and ghee,
+                                    garnished with nuts.</p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dessert Item 5 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian">
+                        <div class="menu-item-card">
+                            <div class="menu-item-img">
+                                <img src="images/jalebi.jpg" alt="Jalebi">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Jalebi</h4>
+                                    <span class="menu-item-price">$5.99</span>
+                                </div>
+                                <p class="menu-item-desc">Crispy, coiled pretzel-shaped sweets soaked in sugar syrup.
+                                </p>
+                                <div class="dietary-icons">
+                                    <div class="dietary-icon" data-tooltip="Vegetarian">
+                                        <i class="fas fa-leaf"></i>
+                                        <span class="tooltip">Vegetarian</span>
+                                    </div>
+                                </div>
+                                <div class="menu-item-footer">
+                                    <div class="spice-level">
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                        <i class="fas fa-pepper-hot inactive"></i>
+                                    </div>
+                                    <button class="add-to-cart">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dessert Item 6 -->
+                    <div class="col-md-6 col-lg-4" data-category="vegetarian chef-recommended">
+                        <div class="menu-item-card">
+                            <div class="chef-recommendation">Chef's Pick</div>
+                            <div class="menu-item-img">
+                                <img src="images/kulfi.jpg" alt="Kulfi">
+                            </div>
+                            <div class="menu-item-body">
+                                <div class="menu-item-title">
+                                    <h4>Kulfi</h4>
+                                    <span class="menu-item-price">$4.99</span>
+                                </div>
+                                <p class="menu-item-desc">Traditional Indian ice cream made with reduced milk, flavored
+                                    with cardamom and pistachios.</p>
+                                <div
